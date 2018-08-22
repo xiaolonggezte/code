@@ -371,10 +371,5 @@ const和define的区别
 
 进程的同步方式：
 
-
-
-	
-
-
-
-	
+c++虚函数
+https://blog.csdn.net/zzwdkxx/article/details/53635173
