@@ -1,0 +1,9 @@
+delete 和 delete[]的区别
+new 和malloc区分的只是还不够明显
+项目还是不够深入：
+    redis
+    高并发这块：
+        锁，竞争
+    mysql的索引
+    网络编程，
+

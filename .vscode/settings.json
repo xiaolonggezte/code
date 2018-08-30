@@ -1,2 +1,12 @@
 {
+    "files.associations": {
+        "algorithm": "cpp",
+        "random": "cpp",
+        "list": "cpp",
+        "iosfwd": "cpp",
+        "__mutex_base": "cpp",
+        "memory": "cpp",
+        "mutex": "cpp",
+        "shared_mutex": "cpp"
+    }
 }
