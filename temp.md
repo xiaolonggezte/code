@@ -19,3 +19,4 @@ delay:
 - 开发工具，给运维同学使用
 指定任务在不同两天上游任务血缘的变化情况。
 - 重新编写血缘桥接表的使用文档API，配上各种使用的demo
+- 进行chaos代码的找错，背景：cat报NullPointException
