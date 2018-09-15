@@ -11,105 +11,62 @@ using namespace std;
 
 #define clr(x,y) memset(x,y,sizeof x)
 typedef long long ll;
-const int maxn = 100000 + 2;
+const int maxn = 2000000 + 2;
 const ll Mod = 1e9 + 7;
+#define INF 0x3f3f3f3f
 
-
-struct point{
-    double x,y;
-};
-point p[N],s[N][N];
-int n,top[N];
-bool vis[N];
-inline bool zero(double x)
-{
-    return fabs(x)<eps;
-}
-double dis(point p1,point p2)
-{
-    return sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
-}
-double dir(point p1,point p2,point p3)
-{
-    return (p3.x-p1.x)*(p2.y-p1.y)-(p3.y-p1.y)*(p2.x-p1.x);
-}
-bool comp(point p1,point p2)
-{
-    double te=dir(p[0],p1,p2);
-    if(te<0)return 1;
-    if(zero(te)&&dis(p[0],p1)<dis(p[0],p2))return 1;
-    return 0;
-}
-void Graham(int k)
-{
-    int pos;
-    double minx=inf,miny=inf;
-    for(int i=0;i<n;i++)
-    {
-        if(p[i].x<minx||(p[i].x==minx&&p[i].y<miny))
-        {
-            minx=p[i].x;
-            miny=p[i].y;
-            pos=i;
-        }
-    }
-    swap(p[0],p[pos]);
-    sort(p+1,p+n,comp);
-    p[n]=p[0];
-    s[k][0]=p[0],s[k][1]=p[1], s[k][2]=p[2];
-    top[k]=2;
-    for(int i=3;i<=n;i++)
-    {
-        while(top[k]>=2&&dir(s[k][top[k]-1],s[k][top[k]],p[i])>=0)top[k]--;
-        s[k][++top[k]]=p[i];
-    }
-}
-double square(int k)
-{
-    double ans=0;
-    for(int i=0;i<top[k]-1;i++)
-        ans-=dir(s[k][0],s[k][i],s[k][i+1]);
-    return ans/2;
-}
-struct Node {
-    double x,y;
-}a[maxn];
 char s[maxn];
-int temp[maxn];
-double X,Y;
-
-
-bool cmp(Node t1,Node t2) {
-    
-}
+char ss[maxn];
+int cnt[maxn];
+int pos[maxn];
 int main() {
-    scanf("%lf,%lf",&X,&Y);
-    scanf("%s",s);
+    ios::sync_with_stdio(false);
+    cin >> s;
     int len = strlen(s);
-    int cnt = 0;
-    int x = 0;
+    int t = 0;
     for(int i = 0;i < len;i ++) {
-        if(s[i] == ',' || i == len - 1) {
-            temp[++ cnt] = x;
-            x = 0;
+        if(i == len - 1) {
+            cnt[++ t] = 1;
+            ss[t] = s[i];
+            pos[t] = i;
+            break;
         }
-        x = x * 10 + s[i] - '0';
-    }
-    for(int i = 1;i <= cnt ;i += 2) {
-        p[i/2].x = temp[i];
-        p[i/2].y = temp[i + 1]；
-    }
-    for(int i=0;i<cnt;i++)
-        {
-            double sq=square(i);
-            if(!vis[i]&&inside(sq,x,y,i))
-            {
-                vis[i]=1;
-                ans+=sq;
+        for(int j = i + 1;j < len;j ++) {
+            if(s[j] != s[i]) {
+                cnt[++ t] = j - i;
+                pos[t] = i;
+                ss[t] = s[i];
+                i = j - 1;
+                break;
+            } else if(j == len - 1) {
+                cnt[++ t] = j - i + 1;
+                ss[t] = s[i];
+                pos[t] = i;
+                i = len;
                 break;
             }
         }
-    int n = cnt / 2;
-    
+    }
+    int ans = -1,poss = -1;
+    for(int i = 1;i <= t - 2;i ++) {
+        if(cnt[i] == cnt[i + 2] && cnt[i] * 2> cnt[i + 1]) {
+            if(cnt[i] + cnt[i + 1] + cnt[i + 2] > ans) {
+                ans = cnt[i] + cnt[i + 1] + cnt[i + 2];
+                poss = i;
+            }
+        }
+    }
+    if(ans == -1) {
+        puts("NULL");
+    } else {
+        // for(int i = 1;i <= t;i ++) {
+        //     cout << ss[i] << " " << cnt[i] << endl;
+        // }
+        // cout << ans << " " << poss << " " << pos[poss] << endl;
+        for(int i = pos[poss];i <= pos[poss] + ans - 1;i ++) {
+            cout << s[i];
+        }
+        cout << endl;
+    }
     return 0;
 }
